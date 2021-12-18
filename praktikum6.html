@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <nav class = "navbar navbar-dark bg-dark">
+        <div class = "container-fluid">
+            <img src="once.png" width = 500 alt="Once" style="display:block; margin:auto;"><h1 align="center"><font face = "Century Gothic" size = "6"> PT. Once Sejahtera </h1></font>
+        </div>
+    </nav>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windu | Praktikum 6</title>
+</head>
+
+<body>
+    <center>
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Nama Pelanggan</th>
+					<td><input type="text" name="nama" id="nama"></td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Kategori</th>
+					<td>
+                        <select id="kategori" name="kategori">
+                          <option value="sosial">Sosial</option>
+                          <option value="rumah">Rumah</option>
+                          <option value="apartemen">Apartemen</option>
+                          <option value="industri">Industri</option>
+                          <option value="villa">Villa</option>
+                        </select>
+                      </td>
+				</tr>
+				<tr>
+					<th>Hari Pemakaian</th>
+					<td><input type="text" name="jumlahPemakaian" id="sumPemakaian"></td>
+				</tr>
+				<tr id="btna">
+					<td colspan="2"><input type="button" name="button" id="btn" value="Hitung" onclick="AddRow()"></td>
+				</tr>
+			</tbody>
+		</table>
+
+        <script>
+            document.getElementById("btn").onclick = function(){
+            var nama = document.getElementById("nama").value;
+            var kategori = document.getElementById("kategori").value;
+            var Pemakaian = document.getElementById("sumPemakaian").value;
+
+            if (Pemakaian > 30){
+                Pemakaian = 0;
+                alert("Tidak bisa lebih dari 30 hari");
+                
+            }
+            else if(nama == "" || Pemakaian == ""){
+                Pemakaian = 0;
+                alert("Ada Kolom yang Kosong!");
+            }
+            
+            var tarif = 0;
+            var abodemen = 0 ;
+            var subtotal = 0;
+            var pajak = 0;
+            var nomor = "";
+
+            nomor += "<tr>";
+            nomor += "<td> Nomor </td>";
+            nomor += "<td> Tarif Per KW-h </td>";
+            nomor += "<td> Abodemen </td>";
+            nomor += "<td> SubTotal </td>";
+            nomor += "</tr>"; 
+
+            for (var i = 1; i<=Pemakaian ; i++){
+                if (kategori == "sosial"){
+                    tarif += 300;
+                    abodemen = 10000;
+                    pajak = 0;
+                }
+                else if (kategori == "rumah"){
+                    tarif += 500;
+                    abodemen = 30000;
+                    pajak = 10;
+                }
+                else if (kategori == "apartemen"){
+                    tarif += 750;
+                    abodemen = 50000;
+                    pajak = 15;
+                }
+                else if (kategori == "industri"){
+                    tarif += 1000;
+                    abodemen = 750000;
+                    pajak = 20;
+                }
+                else {
+                    tarif += 1250;
+                    abodemen = 100000;
+                    pajak = 25;
+                }
+
+                subtotal = tarif + abodemen;
+                
+                nomor += "<tr>";
+                nomor += "<td>" + i + "</td>";
+                nomor += "<td>" + tarif + "</td>";
+                nomor += "<td>" + abodemen + "</td>"; 
+                nomor += "<td>" + subtotal + "</td>"; 
+                nomor += "</tr>"
+        
+            }
+            var totalpajak = (subtotal * pajak)/100;
+            
+            document.getElementById("tabelDua").innerHTML = nomor;
+            document.getElementById("subTotal").innerHTML = subtotal;
+            document.getElementById("totalPajak").innerHTML = totalpajak;
+            document.getElementById("totalBayar").innerHTML = (subtotal + totalpajak);
+
+            
+        }
+  </script>
+  <p><font size="5">Rincian Tagihan </p></font>
+  <table border="1" id="tabelDua">
+      <thead>
+          <tr>
+              <th>Jumlah</th>
+              <th>Tarif/kW-h</th>
+              <th>Abodemen</th>
+              <th>Sub Total</th>
+          </tr>
+      </thead>
+  </table>
+  <div id = "total" omload="Function()">
+    <br><label> Subtotal : <span id=subTotal></span> </label> <br>
+    <label> Pajak : <span id=totalPajak></span> </label>  <br>
+    <label> Bayar : <span id=totalBayar></span> </label>  <br>
+  </div>
+</center>
+
+</body>
+</html>
